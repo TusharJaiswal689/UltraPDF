@@ -5,20 +5,6 @@ plugins {
     // (No AGP or Kotlin plugin here — they go inside the app module)
 }
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 tasks.register("clean", Delete::class) {
     delete(rootProject.layout.buildDirectory)
 }

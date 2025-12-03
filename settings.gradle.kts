@@ -7,14 +7,15 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    versionCatalogs {
-    }
-
-    repositories {
-        google()
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS) // Good practice
+    repositories {        google()
         mavenCentral()
     }
+    versionCatalogs {
+        create("libs")
+    }
 }
+
 
 rootProject.name = "UltraPDF"
 
