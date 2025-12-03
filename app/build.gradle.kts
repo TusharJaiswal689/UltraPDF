@@ -58,11 +58,15 @@ dependencies {
     implementation(libs.camerax.view)
 
     implementation(libs.mlkit.ocr)
+    implementation(libs.mlkit.document.scanner)
     implementation(libs.billing)
     implementation(libs.google.ads)
 
     implementation(libs.pdfbox)
-    implementation(libs.opencv)
+    implementation(libs.pdfbox.fontbox)
+    implementation(libs.pdfbox.tools)
+    coreLibraryDesugaring(libs.desugar)
+//    implementation(libs.opencv)
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

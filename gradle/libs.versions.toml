@@ -6,6 +6,9 @@ kotlin = "2.0.0"
 agp = "8.13.1"
 hilt = "2.51.1"
 accompanist = "0.32.0"
+mlkit = "16.0.0"
+
+desugar = "2.0.4"
 
 compose-bom = "2024.09.00"         # Stable Compose BOM
 composeCompiler = "1.5.14"       # Last stable compiler fully compatible with Kotlin 2.0
@@ -27,9 +30,7 @@ ads = "23.4.0"                      # AdMob 23.4.0 fixes earlier play-services c
 
 pdfbox = "2.0.30" # Tom Roush's PDFBox for Android
 
-mlkit-ocr = "16.0.0"                # ML Kit text recognition stable
-
-opencv = "4.9.0"                   # Latest OpenCV Android SDK (Maven Central)
+#opencv = "4.8.0"                   # Latest OpenCV Android SDK (Maven Central)
 
 ################
 # Dependencies #
@@ -80,7 +81,8 @@ billing = { group = "com.android.billingclient", name = "billing-ktx", version.r
 google-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "ads" }
 
 # ML Kit - OCR
-mlkit-ocr = { group = "com.google.android.gms", name = "play-services-mlkit-text-recognition", version.ref = "mlkit-ocr" }
+mlkit-ocr = { group = "com.google.android.gms", name = "play-services-mlkit-text-recognition", version.ref = "mlkit" }
+mlkit-document-scanner = { group = "com.google.android.gms", name = "document-scanner", version.ref = "mlkit" }
 
 # CameraX
 camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "camerax" }
@@ -89,10 +91,13 @@ camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", vers
 camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
 
 # PDFBox
-pdfbox = { group = "com.tom-roush.pdfbox", name = "pdfbox-android", version.ref = "pdfbox" }
+pdfbox = { group = "org.apache.pdfbox", name = "pdfbox", version.ref = "pdfbox" }
+pdfbox-tools = { group = "org.apache.pdfbox", name = "pdfbox-tools", version.ref = "pdfbox" }
+pdfbox-fontbox = { group = "org.apache.pdfbox", name = "fontbox", version.ref = "pdfbox" }
+desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar" }
 
 # OpenCV
-opencv = { group = "com.quickbirdstudios", name = "opencv", version.ref = "opencv" }
+#opencv = { group = "com.quickbirdstudios", name = "opencv", version.ref = "opencv" }
 
 # Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
