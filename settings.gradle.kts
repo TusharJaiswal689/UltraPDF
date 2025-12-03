@@ -3,19 +3,21 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS) // Good practice
-    repositories {        google()
-        mavenCentral()
-    }
     versionCatalogs {
         create("libs")
     }
-}
 
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
 
 rootProject.name = "UltraPDF"
 

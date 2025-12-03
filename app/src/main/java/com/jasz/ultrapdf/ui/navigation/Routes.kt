@@ -8,7 +8,9 @@ sealed class Screen(val route: String) {
     object ImageToPdf : Screen("image_to_pdf_screen")
     object DocScanner : Screen("doc_scanner_screen")
     object OcrReader : Screen("ocr_reader_screen")
-    object Result : Screen("result_screen")
+    object Result : Screen("result_screen/{filePath}") {
+        fun createRoute(filePath: String) = "result_screen/$filePath"
+    }
     object Settings : Screen("settings_screen")
     object Premium : Screen("premium_screen")
     object MyFiles : Screen("my_files_screen")

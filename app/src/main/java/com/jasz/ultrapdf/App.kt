@@ -3,6 +3,7 @@ package com.jasz.ultrapdf
 
 import android.app.Application
 import com.google.android.gms.ads.MobileAds
+import com.quickbird.snapshot.OpenCv
 import dagger.hilt.android.HiltAndroidApp
 
 
@@ -12,5 +13,7 @@ class App : Application() {
         super.onCreate()
         // Initialize Mobile Ads SDK
         MobileAds.initialize(this)
+        // Initialize OpenCV
+        OpenCv.init()
     }
 }

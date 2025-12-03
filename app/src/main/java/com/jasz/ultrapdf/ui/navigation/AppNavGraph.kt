@@ -1,9 +1,11 @@
 package com.jasz.ultrapdf.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.jasz.ultrapdf.ui.screens.documentscanner.ScannerScreen
 import com.jasz.ultrapdf.ui.screens.home.HomeScreen
 import com.jasz.ultrapdf.ui.screens.imagecompression.ImageCompressionScreen
@@ -39,8 +41,12 @@ fun AppNavGraph() {
         composable(Screen.OcrReader.route) {
             OCRScreen(navController)
         }
-        composable(Screen.Result.route) {
-            ResultScreen(navController)
+        composable(
+            route = Screen.Result.route,
+            arguments = listOf(navArgument("filePath") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val filePath = backStackEntry.arguments?.getString("filePath") ?: ""
+            ResultScreen(navController, filePath)
         }
         composable(Screen.Settings.route) {
             // Settings Screen

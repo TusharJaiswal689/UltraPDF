@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-files-path
+        name="compressed_images"
+        path="compressed_images/" />
+    <external-files-path
+        name="compressed_pdfs"
+        path="compressed_pdfs/" />
+    <external-files-path
+        name="converted_pdfs"
+        path="converted_pdfs/" />
+    <external-files-path
+        name="scanned_documents"
+        path="scanned_documents/" />
+</paths>

@@ -39,10 +39,13 @@ dependencies {
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime)
+    implementation(libs.lifecycle.runtime.compose)
     implementation(libs.viewmodel.compose)
 
     implementation(libs.activity.compose)
     implementation(libs.navigation.compose)
+
+    implementation(libs.accompanist.permissions)
 
     implementation(libs.coroutines.android)
     implementation(libs.datastore.preferences)
@@ -66,6 +69,6 @@ dependencies {
     ksp(libs.room.compiler)
 
     implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
+
 }
