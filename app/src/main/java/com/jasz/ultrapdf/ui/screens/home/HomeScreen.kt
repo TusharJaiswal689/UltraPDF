@@ -1,6 +1,7 @@
 package com.jasz.ultrapdf.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,14 +25,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.jasz.ultrapdf.ui.MainViewModel
+import com.jasz.ultrapdf.ui.ads.BannerAdView
 import com.jasz.ultrapdf.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(
+    navController: NavController,
+    mainViewModel: MainViewModel = hiltViewModel()
+) {
+    val isPremium by mainViewModel.isPremium.collectAsStateWithLifecycle()
+    val isOcrUnlocked by mainViewModel.isOcrUnlocked.collectAsStateWithLifecycle()
     var showMenu by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -68,27 +79,41 @@ fun HomeScreen(navController: NavController) {
             )
         }
     ) { paddingValues ->
-        val features = listOf(
-            "Compress Image" to Screen.ImageCompress.route,
-            "Compress PDF" to Screen.PdfCompress.route,
-            "Image to PDF" to Screen.ImageToPdf.route,
-            "Scan Document" to Screen.DocScanner.route,
-            "OCR Reader" to Screen.OcrReader.route
-        )
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            items(features) { (name, route) ->
-                Button(onClick = { navController.navigate(route) }) {
-                    Text(name)
+            val features = listOf(
+                "Compress Image" to Screen.ImageCompress.route,
+                "Compress PDF" to Screen.PdfCompress.route,
+                "Image to PDF" to Screen.ImageToPdf.route,
+                "Scan Document" to Screen.DocScanner.route,
+                "OCR Reader" to Screen.OcrReader.route
+            )
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(features) { (name, route) ->
+                    Button(
+                        onClick = { navController.navigate(route) },
+                        enabled = if (route == Screen.OcrReader.route) isOcrUnlocked else true
+                    ) {
+                        Text(name)
+                    }
                 }
+            }
+
+            if (!isPremium) {
+                BannerAdView(
+                    adUnitId = "ca-app-pub-3940256099942544/6300978111", // Test ad unit ID
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                )
             }
         }
     }

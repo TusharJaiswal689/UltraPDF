@@ -1,16 +1,14 @@
 package com.jasz.ultrapdf.domain.usecases
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import com.tom_roush.pdfbox.pdmodel.PDDocument
-import com.tom_roush.pdfbox.pdmodel.PDPage
-import com.tom_roush.pdfbox.pdmodel.common.PDRectangle
-import com.tom_roush.pdfbox.pdmodel.PDPageContentStream
-import com.tom_roush.pdfbox.pdmodel.graphics.image.PDImageXObject
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.ByteArrayOutputStream
+import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.pdmodel.PDPage
+import org.apache.pdfbox.pdmodel.common.PDRectangle
+import org.apache.pdfbox.pdmodel.PDPageContentStream
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject
 import java.io.File
 import javax.inject.Inject
 
@@ -32,11 +30,7 @@ class ConvertImageToPdfUseCase @Inject constructor(
             val page = PDPage(PDRectangle(bitmap.width.toFloat(), bitmap.height.toFloat()))
             newDocument.addPage(page)
 
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val imageBytes = baos.toByteArray()
-
-            val imageXObject = PDImageXObject.createFromByteArray(newDocument, imageBytes, "image")
+            val imageXObject = PDImageXObject.createFromForm(newDocument, context.contentResolver.openInputStream(uri))
             val contentStream = PDPageContentStream(newDocument, page)
             contentStream.drawImage(imageXObject, 0f, 0f)
             contentStream.close()

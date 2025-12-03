@@ -20,6 +20,10 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     buildFeatures {
         compose = true
     }
@@ -36,6 +40,8 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.preview)
     debugImplementation(libs.compose.ui.tooling)
+
+    coreLibraryDesugaring(libs.desugar)
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime)
@@ -65,8 +71,6 @@ dependencies {
     implementation(libs.pdfbox)
     implementation(libs.pdfbox.fontbox)
     implementation(libs.pdfbox.tools)
-    coreLibraryDesugaring(libs.desugar)
-//    implementation(libs.opencv)
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
@@ -74,5 +78,4 @@ dependencies {
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
 }

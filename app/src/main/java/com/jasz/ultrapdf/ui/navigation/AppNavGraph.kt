@@ -10,9 +10,12 @@ import com.jasz.ultrapdf.ui.screens.documentscanner.ScannerScreen
 import com.jasz.ultrapdf.ui.screens.home.HomeScreen
 import com.jasz.ultrapdf.ui.screens.imagecompression.ImageCompressionScreen
 import com.jasz.ultrapdf.ui.screens.imagetopdf.ImageToPdfScreen
+import com.jasz.ultrapdf.ui.screens.myfiles.MyFilesScreen
 import com.jasz.ultrapdf.ui.screens.ocr.OCRScreen
 import com.jasz.ultrapdf.ui.screens.pdfcompression.PdfCompressionScreen
+import com.jasz.ultrapdf.ui.screens.premium.PremiumScreen
 import com.jasz.ultrapdf.ui.screens.result.ResultScreen
+import com.jasz.ultrapdf.ui.screens.settings.SettingsScreen
 import com.jasz.ultrapdf.ui.screens.splash.SplashScreen
 
 @Composable
@@ -49,13 +52,13 @@ fun AppNavGraph() {
             ResultScreen(navController, filePath)
         }
         composable(Screen.Settings.route) {
-            // Settings Screen
+            SettingsScreen(navController)
         }
         composable(Screen.Premium.route) {
-            // Premium Screen
+            PremiumScreen(navController)
         }
         composable(Screen.MyFiles.route) {
-            // My Files Screen
+            MyFilesScreen(navController)
         }
     }
 }

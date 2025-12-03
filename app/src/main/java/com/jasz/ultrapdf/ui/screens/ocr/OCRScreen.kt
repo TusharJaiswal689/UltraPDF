@@ -19,9 +19,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +45,7 @@ fun OCRScreen(
 ) {
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     var extractedText by remember { mutableStateOf("") }
 
@@ -53,6 +57,7 @@ fun OCRScreen(
     )
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = { Text("OCR Reader") },
@@ -102,7 +107,9 @@ fun OCRScreen(
                     extractedText = state.extractedText
                 }
                 is OcrState.Error -> {
-                    // TODO: Show error message
+                    LaunchedEffect(snackbarHostState) {
+                        snackbarHostState.showSnackbar(message = state.message)
+                    }
                 }
                 else -> {}
             }

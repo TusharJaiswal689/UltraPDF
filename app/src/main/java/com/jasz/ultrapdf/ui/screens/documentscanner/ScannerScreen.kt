@@ -1,8 +1,6 @@
 package com.jasz.ultrapdf.ui.screens.documentscanner
 
 import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,16 +29,8 @@ import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.jasz.ultrapdf.ui.navigation.Screen
+import com.jasz.ultrapdf.ui.utils.findActivity
 import java.net.URLEncoder
-
-fun Context.findActivity(): Activity {
-    var context = this
-    while (context is ContextWrapper) {
-        if (context is Activity) return context
-        context = context.baseContext
-    }
-    throw IllegalStateException("Permissions should be called in the context of an Activity")
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

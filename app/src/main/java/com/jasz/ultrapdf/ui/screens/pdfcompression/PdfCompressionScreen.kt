@@ -19,6 +19,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -45,6 +47,7 @@ fun PdfCompressionScreen(
     var pdfUri by remember { mutableStateOf<Uri?>(null) }
     var compressionLevel by remember { mutableStateOf(50f) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val pdfPicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
@@ -54,6 +57,7 @@ fun PdfCompressionScreen(
     )
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = { Text("Compress PDF") },
@@ -117,7 +121,9 @@ fun PdfCompressionScreen(
                     }
                 }
                 is PdfCompressionState.Error -> {
-                    // TODO: Show error message
+                    LaunchedEffect(snackbarHostState) {
+                        snackbarHostState.showSnackbar(message = state.message)
+                    }
                 }
                 else -> {}
             }

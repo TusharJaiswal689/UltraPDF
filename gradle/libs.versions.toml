@@ -82,7 +82,7 @@ google-ads = { group = "com.google.android.gms", name = "play-services-ads", ver
 
 # ML Kit - OCR
 mlkit-ocr = { group = "com.google.android.gms", name = "play-services-mlkit-text-recognition", version.ref = "mlkit" }
-mlkit-document-scanner = { group = "com.google.android.gms", name = "document-scanner", version.ref = "mlkit" }
+mlkit-document-scanner = { group = "com.google.android.gms", name = "play-services-mlkit-document-scanner", version.ref = "mlkit" }
 
 # CameraX
 camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "camerax" }

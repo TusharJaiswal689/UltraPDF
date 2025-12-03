@@ -2,12 +2,13 @@ package com.jasz.ultrapdf.domain.usecases
 
 import android.content.Context
 import android.net.Uri
-import com.tom_roush.pdfbox.pdmodel.PDDocument
-import com.tom_roush.pdfbox.pdmodel.PDPage
-import com.tom_roush.pdfbox.pdmodel.PDPageContentStream
-import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory
-import com.tom_roush.pdfbox.util.Matrix
 import dagger.hilt.android.qualifiers.ApplicationContext
+import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.pdmodel.PDPage
+import org.apache.pdfbox.pdmodel.PDResources
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject
+import java.awt.image.BufferedImage
 import java.io.File
 import javax.inject.Inject
 
@@ -25,21 +26,19 @@ class CompressPdfUseCase @Inject constructor(
 
         val outputFile = File(outputDir, "compressed_${System.currentTimeMillis()}.pdf")
 
-        val newDocument = PDDocument()
         for (page in document.pages) {
-            val newPage = newDocument.importPage(page)
-            val image = page.resources.images.firstOrNull()
-
-            if (image != null) {
-                val compressedImage = JPEGFactory.createFromImage(newDocument, image.image, quality / 100f)
-                val contentStream = PDPageContentStream(newDocument, newPage, PDPageContentStream.AppendMode.APPEND, true, true)
-                contentStream.drawImage(compressedImage, Matrix())
-                contentStream.close()
+            val resources: PDResources = page.resources
+            for (name in resources.xObjectNames) {
+                val xObject = resources.getXObject(name)
+                if (xObject is PDImageXObject) {
+                    val image: BufferedImage = xObject.image
+                    val compressedImage = LosslessFactory.createFromImage(document, image)
+                    resources.put(name, compressedImage)
+                }
             }
         }
 
-        newDocument.save(outputFile)
-        newDocument.close()
+        document.save(outputFile)
         document.close()
 
         return outputFile.absolutePath
